@@ -21614,6 +21614,12 @@
 	
 	var _view = __webpack_require__(194);
 	
+	var _reactRedux = __webpack_require__(196);
+	
+	var _actions = __webpack_require__(239);
+	
+	var _actions2 = _interopRequireDefault(_actions);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -21634,18 +21640,21 @@
 		_createClass(Tasks, [{
 			key: 'componentDidMount',
 			value: function componentDidMount() {
-				_utils.APIManager.get('/api/task', null).then(function (response) {
-					console.log(JSON.stringify(response));
+				this.props.fetchTasks(null).then(function (results) {
+					//			console.log(JSON.stringify('action.payload'))
 				}).catch(function (err) {
-					console.log('ERROR: ' + JSON.stringify.err);
+					alert(err);
 				});
 			}
 		}, {
 			key: 'createTask',
 			value: function createTask(task) {
+				var _this2 = this;
+	
 				//		console.log('CREATE TASK: '+JSON.stringify(task))
 				_utils.APIManager.post('/api/task', task).then(function (response) {
 					console.log(JSON.stringify(response));
+					_this2.props.taskCreated(response.result);
 				}).catch(function (err) {
 					console.log('ERROR: ' + JSON.stringify.err);
 				});
@@ -21656,7 +21665,22 @@
 				return _react2.default.createElement(
 					'div',
 					null,
-					'Tasks Container',
+					_react2.default.createElement(
+						'h2',
+						null,
+						'Tasks'
+					),
+					_react2.default.createElement(
+						'ol',
+						null,
+						this.props.tasks.all == null ? null : this.props.tasks.all.map(function (task, i) {
+							return _react2.default.createElement(
+								'li',
+								{ key: task.id },
+								task.title
+							);
+						})
+					),
 					_react2.default.createElement(_view.CreateTask, { onSubmitTask: this.createTask.bind(this) })
 				);
 			}
@@ -21665,7 +21689,27 @@
 		return Tasks;
 	}(_react.Component);
 	
-	exports.default = Tasks;
+	var stateToProps = function stateToProps(state) {
+		return {
+			tasks: state.task
+		};
+	};
+	
+	var dispatchToProps = function dispatchToProps(dispatch) {
+		return {
+			fetchTasks: function fetchTasks(params) {
+				return dispatch(_actions2.default.fetchTasks(params));
+			},
+			tasksReceived: function tasksReceived(tasks) {
+				return dispatch(_actions2.default.tasksReceived(tasks));
+			},
+			taskCreated: function taskCreated(task) {
+				return dispatch(_actions2.default.taskCreated(task));
+			}
+		};
+	};
+	
+	exports.default = (0, _reactRedux.connect)(stateToProps, dispatchToProps)(Tasks);
 
 /***/ },
 /* 182 */
@@ -31929,17 +31973,29 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var initialState = {};
+	var initialState = {
+		all: null
+	
+	};
 	
 	exports.default = function () {
 		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
 		var action = arguments[1];
 	
 	
+		var updated = Object.assign({}, state);
+	
 		switch (action.type) {
 			case _constants2.default.TASKS_RECEIVED:
-				console.log('TASKS_RECEIVED: ' + JSON.stringify(action.tasks));
+				//			console.log('TASKS_RECEIVED: '+JSON.stringify(action.tasks))
+				updated['all'] = action.payload;
+				return updated;
 	
+			case _constants2.default.TASK_CREATED:
+				//			console.log('TASKS_CREATED: '+JSON.stringify(action.tasks))
+				var currentTasks = updated['all'] ? Object.assign([], updated['all']) : [];
+				currentTasks.unshift(action.payload);
+				updated['all'] = currentTasks;
 				return updated;
 	
 			default:
@@ -31960,6 +32016,63 @@
 		TASKS_RECEIVED: 'TASKS_RECEIVED',
 		TASK_CREATED: 'TASK_CREATED'
 	
+	};
+
+/***/ },
+/* 239 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _constants = __webpack_require__(238);
+	
+	var _constants2 = _interopRequireDefault(_constants);
+	
+	var _utils = __webpack_require__(182);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var getRequest = function getRequest(path, params, actionType) {
+		return function (dispatch) {
+			return _utils.APIManager.get(path, params).then(function (response) {
+				console.log('GET: ' + JSON.stringify(response));
+				var payload = response.results || response.result;
+	
+				dispatch({
+					type: actionType,
+					payload: payload
+				});
+			}).catch(function (err) {
+				console.log('ERR: ' + JSON.stringify(err));
+			});
+		};
+	};
+	
+	exports.default = {
+	
+		fetchTasks: function fetchTasks(params) {
+			return function (dispatch) {
+				return dispatch(getRequest('/api/task', params, _constants2.default.TASKS_RECEIVED));
+			};
+		},
+	
+		tasksReceived: function tasksReceived(tasks) {
+			return {
+				type: _constants2.default.TASKS_RECEIVED,
+				tasks: tasks
+			};
+		},
+	
+		taskCreated: function taskCreated(task) {
+			return {
+				type: _constants2.default.TASK_CREATED,
+				task: task
+			};
+		}
 	};
 
 /***/ }
