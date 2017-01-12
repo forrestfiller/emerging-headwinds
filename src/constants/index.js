@@ -1,0 +1,5 @@
+export default {
+	TASKS_RECEIVED: 'TASKS_RECEIVED',
+	TASK_CREATED: 'TASK_CREATED'
+	
+}
