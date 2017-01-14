@@ -9,8 +9,8 @@ router.get('/task', function(req, res, next) {
 })
 
 router.post('/task', function(req, res, next) {
-	console.log('test')
-//	console.log('HEre is twilio: '+JSON.stringfiy(req.body))
+	console.log('test'+JSON.stringify(req.body))
+
 	res.send('Hello Friend')
 })
 
