@@ -5,20 +5,34 @@ import { connect } from 'react-redux'
 import actions from '../../actions'
 
 class Tasks extends Component {
-	componentDidMount(){
-		this.props.fetchTasks(null)
+	getTasks(){
+	//	console.log(JSON.stringify(results))
+		if (this.props.tasks[this.props.tasks.selectedCategory] != null)
+			return
+
+		this.props.fetchTasks({category: this.props.tasks.selectedCategory})
 		.then(results => {
-//			console.log(JSON.stringify('action.payload'))
+
 		})
 		.catch(err => {
 			alert(err)
 		})
 	}
 
+	componentDidMount(){
+		this.getTasks()
+	}
+
+	componentDidUpdate(){
+		this.getTasks()
+	}
+
 	createTask(task){
+		if (task.category.length == 0)
+			task['category'] = 'delivery'
+
 		this.props.submitTask(task)
 		.then(result => {
-//			console.log(JSON.stringify(result))
 		})
 		.catch(err => {
 			console.log('ERROR: '+JSON.stringify(err))
@@ -30,8 +44,8 @@ class Tasks extends Component {
 			<div>
 				<h2>Tasks</h2>
 				<ol>
-					{ (this.props.tasks.all == null) ? null :
-							this.props.tasks.all.map((task, i) => {
+					{ (this.props.tasks[this.props.tasks.selectedCategory] == null) ? null :
+							this.props.tasks[this.props.tasks.selectedCategory].map((task, i) => {
 								return <li key={task.id}>{task.title}, {task.category}</li>
 							})
 					}

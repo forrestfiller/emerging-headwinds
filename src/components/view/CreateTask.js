@@ -8,7 +8,7 @@ class CreateTask extends Component {
 			task: {
 				title: '',
 				description: '',
-				category: ''
+				category: 'delivery'
 			}
 		}
 	}
@@ -37,7 +37,7 @@ class CreateTask extends Component {
 				<select id="category" onChange={this.updateTask.bind(this)}>
 					<option value="delivery">Delivery</option>
 					<option value="dog walking">Dog Walking</option>
-					<option value="home cleaning">House Clearning</option>
+					<option value="house cleaning">House Clearning</option>
 				</select>
 				<button onClick={this.submitTask.bind(this)}>Submit</button>
 			</div>

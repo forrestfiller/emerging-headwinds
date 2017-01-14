@@ -1,8 +1,8 @@
 import constants from '../constants'
 
 var initialState = {
-	all: null,
-	selectedCategory: 'delivery',
+//	all: null,
+	selectedCategory: 'dog walking',
 	categories: [
 		'delivery',
 		'dog walking',
@@ -11,24 +11,28 @@ var initialState = {
 }
 
 export default (state = initialState, action) => {
-
 	let updated = Object.assign({}, state)
 
 	switch (action.type){
 		case constants.TASKS_RECEIVED:
-//			console.log('TASKS_RECEIVED: '+JSON.stringify(action.payload))
-			updated['all'] = action.payload
+			// console.log('TASKS_RECEIVED: '+JSON.stringify(action.params))
+			const keys = Object.keys(action.params)
+			keys.forEach((key, i) => {
+				const value = action.params[key] // delivery, dog walking,etc
+				updated[value] = action.payload
+			})
+	//		console.log('TASKS_RECEIVED: '+JSON.stringify(updated))
 			return updated
 
 		case constants.TASK_CREATED:
-//			console.log('TASKS_CREATED: '+JSON.stringify(action.payload))
-			let currentTasks = (updated['all']) ? Object.assign([],updated['all']) : []
+			let currentTasks = (updated[action.payload.category]) ? Object.assign([],updated[action.payload.category]) : []
 			currentTasks.unshift(action.payload)
-			updated['all'] = currentTasks
+			updated[action.payload.category] = currentTasks
 			return updated
 
 		case constants.CATEGORY_SELECTED:
-		console.log('CATEGORY_SELECTED: '+JSON.stringify(action.payload))
+//		console.log('CATEGORY_SELECTED: '+JSON.stringify(action.payload))
+			updated['selectedCategory'] = action.payload
 			return updated
 
 		default:

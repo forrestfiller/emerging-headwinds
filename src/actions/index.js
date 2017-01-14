@@ -10,7 +10,8 @@ const getRequest = (path, params, actionType) => {
 
 			dispatch({
 				type: actionType,
-				payload: payload
+				payload: payload,
+				params: params
 			})
 
 		})

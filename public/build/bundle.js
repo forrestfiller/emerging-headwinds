@@ -21651,20 +21651,31 @@
 		}
 	
 		_createClass(Tasks, [{
-			key: 'componentDidMount',
-			value: function componentDidMount() {
-				this.props.fetchTasks(null).then(function (results) {
-					//			console.log(JSON.stringify('action.payload'))
-				}).catch(function (err) {
+			key: 'getTasks',
+			value: function getTasks() {
+				//	console.log(JSON.stringify(results))
+				if (this.props.tasks[this.props.tasks.selectedCategory] != null) return;
+	
+				this.props.fetchTasks({ category: this.props.tasks.selectedCategory }).then(function (results) {}).catch(function (err) {
 					alert(err);
 				});
 			}
 		}, {
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				this.getTasks();
+			}
+		}, {
+			key: 'componentDidUpdate',
+			value: function componentDidUpdate() {
+				this.getTasks();
+			}
+		}, {
 			key: 'createTask',
 			value: function createTask(task) {
-				this.props.submitTask(task).then(function (result) {
-					//			console.log(JSON.stringify(result))
-				}).catch(function (err) {
+				if (task.category.length == 0) task['category'] = 'delivery';
+	
+				this.props.submitTask(task).then(function (result) {}).catch(function (err) {
 					console.log('ERROR: ' + JSON.stringify(err));
 				});
 			}
@@ -21682,7 +21693,7 @@
 					_react2.default.createElement(
 						'ol',
 						null,
-						this.props.tasks.all == null ? null : this.props.tasks.all.map(function (task, i) {
+						this.props.tasks[this.props.tasks.selectedCategory] == null ? null : this.props.tasks[this.props.tasks.selectedCategory].map(function (task, i) {
 							return _react2.default.createElement(
 								'li',
 								{ key: task.id },
@@ -29603,7 +29614,7 @@
 				task: {
 					title: '',
 					description: '',
-					category: ''
+					category: 'delivery'
 				}
 			};
 			return _this;
@@ -29656,7 +29667,7 @@
 						),
 						_react2.default.createElement(
 							'option',
-							{ value: 'home cleaning' },
+							{ value: 'house cleaning' },
 							'House Clearning'
 						)
 					),
@@ -31928,7 +31939,8 @@
 	
 				dispatch({
 					type: actionType,
-					payload: payload
+					payload: payload,
+					params: params
 				});
 			}).catch(function (err) {
 				console.log('ERR: ' + JSON.stringify(err));
@@ -32100,8 +32112,8 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var initialState = {
-		all: null,
-		selectedCategory: 'delivery',
+		//	all: null,
+		selectedCategory: 'dog walking',
 		categories: ['delivery', 'dog walking', 'house cleaning']
 	};
 	
@@ -32109,24 +32121,28 @@
 		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
 		var action = arguments[1];
 	
-	
 		var updated = Object.assign({}, state);
 	
 		switch (action.type) {
 			case _constants2.default.TASKS_RECEIVED:
-				//			console.log('TASKS_RECEIVED: '+JSON.stringify(action.payload))
-				updated['all'] = action.payload;
+				// console.log('TASKS_RECEIVED: '+JSON.stringify(action.params))
+				var keys = Object.keys(action.params);
+				keys.forEach(function (key, i) {
+					var value = action.params[key]; // delivery, dog walking,etc
+					updated[value] = action.payload;
+				});
+				//		console.log('TASKS_RECEIVED: '+JSON.stringify(updated))
 				return updated;
 	
 			case _constants2.default.TASK_CREATED:
-				//			console.log('TASKS_CREATED: '+JSON.stringify(action.payload))
-				var currentTasks = updated['all'] ? Object.assign([], updated['all']) : [];
+				var currentTasks = updated[action.payload.category] ? Object.assign([], updated[action.payload.category]) : [];
 				currentTasks.unshift(action.payload);
-				updated['all'] = currentTasks;
+				updated[action.payload.category] = currentTasks;
 				return updated;
 	
 			case _constants2.default.CATEGORY_SELECTED:
-				console.log('CATEGORY_SELECTED: ' + JSON.stringify(action.payload));
+				//		console.log('CATEGORY_SELECTED: '+JSON.stringify(action.payload))
+				updated['selectedCategory'] = action.payload;
 				return updated;
 	
 			default:
