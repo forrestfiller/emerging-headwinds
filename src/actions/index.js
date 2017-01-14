@@ -5,7 +5,7 @@ const getRequest = (path, params, actionType) => {
 	return (dispatch) =>
 		APIManager.get(path, params)
 		.then(response => {
-			console.log('GET: '+JSON.stringify(response))
+//			console.log('GET: '+JSON.stringify(response))
 			const payload = response.results || response.result
 
 			dispatch({
@@ -24,7 +24,7 @@ const postRequest = (path, params, actionType) => {
 	return (dispatch) =>
 		APIManager.post(path, params)
 		.then(response => {
-			console.log('POST: '+JSON.stringify(response))
+//			console.log('POST: '+JSON.stringify(response))
 			const payload = response.results || response.result
 
 			dispatch({
@@ -40,6 +40,13 @@ const postRequest = (path, params, actionType) => {
 }
 
 export default {
+
+	selectCategory: (category) => {
+		return {
+			type: constants.CATEGORY_SELECTED,
+			payload: category
+		}
+	},
 
 	fetchTasks: (params) => {
 		return (dispatch) => {
@@ -59,10 +66,5 @@ export default {
 			return dispatch(postRequest('/api/task', params, constants.TASK_CREATED))
 		}
 	}
-	// taskCreated: (task) => {
-	// 	return {
-	// 		type: constants.TASK_CREATED,
-	// 		payload: task
-	// 	}
-	// }
+
 }

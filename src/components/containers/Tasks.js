@@ -32,7 +32,7 @@ class Tasks extends Component {
 				<ol>
 					{ (this.props.tasks.all == null) ? null :
 							this.props.tasks.all.map((task, i) => {
-								return <li key={task.id}>{task.title}</li>
+								return <li key={task.id}>{task.title}, {task.category}</li>
 							})
 					}
 				</ol>

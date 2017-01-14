@@ -1,13 +1,18 @@
 import React, { Component } from 'react'
-import { Tasks } from '../containers'
+import { Tasks, Categories } from '../containers'
 
 class Home extends Component {
 
 	render(){
 		return (
-			<div>
-				Home Layout
-				<Tasks />
+			<div className="row">
+				<div className="col-md-4">
+					<Categories />
+				</div>
+				<div className="col-md-8">
+					<Tasks />
+				</div>
+
 			</div>
 		)
 	}
