@@ -16,16 +16,12 @@ class Tasks extends Component {
 	}
 
 	createTask(task){
-//		console.log('CREATE TASK: '+JSON.stringify(task))
-		APIManager
-		.post('/api/task', task)
-		.then(response => {
-			console.log(JSON.stringify(response))
-			this.props.taskCreated(response.result)
-
+		this.props.submitTask(task)
+		.then(result => {
+//			console.log(JSON.stringify(result))
 		})
 		.catch(err => {
-			console.log('ERROR: '+JSON.stringify.err)
+			console.log('ERROR: '+JSON.stringify(err))
 		})
 	}
 
@@ -56,7 +52,9 @@ const dispatchToProps = (dispatch) => {
 	return {
 		fetchTasks: (params) => dispatch(actions.fetchTasks(params)),
 		tasksReceived: (tasks) => dispatch(actions.tasksReceived(tasks)),
-		taskCreated: (task) => dispatch(actions.taskCreated(task))
+		// taskCreated: (task) => dispatch(actions.taskCreated(task))
+		submitTask: (params) => dispatch(actions.submitTask(params))
+
 	}
 }
 

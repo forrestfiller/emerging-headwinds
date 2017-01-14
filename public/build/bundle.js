@@ -58,7 +58,7 @@
 	
 	var _reactRedux = __webpack_require__(196);
 	
-	var _stores = __webpack_require__(234);
+	var _stores = __webpack_require__(236);
 	
 	var _stores2 = _interopRequireDefault(_stores);
 	
@@ -21616,7 +21616,7 @@
 	
 	var _reactRedux = __webpack_require__(196);
 	
-	var _actions = __webpack_require__(239);
+	var _actions = __webpack_require__(234);
 	
 	var _actions2 = _interopRequireDefault(_actions);
 	
@@ -21649,14 +21649,10 @@
 		}, {
 			key: 'createTask',
 			value: function createTask(task) {
-				var _this2 = this;
-	
-				//		console.log('CREATE TASK: '+JSON.stringify(task))
-				_utils.APIManager.post('/api/task', task).then(function (response) {
-					console.log(JSON.stringify(response));
-					_this2.props.taskCreated(response.result);
+				this.props.submitTask(task).then(function (result) {
+					//			console.log(JSON.stringify(result))
 				}).catch(function (err) {
-					console.log('ERROR: ' + JSON.stringify.err);
+					console.log('ERROR: ' + JSON.stringify(err));
 				});
 			}
 		}, {
@@ -21703,9 +21699,11 @@
 			tasksReceived: function tasksReceived(tasks) {
 				return dispatch(_actions2.default.tasksReceived(tasks));
 			},
-			taskCreated: function taskCreated(task) {
-				return dispatch(_actions2.default.taskCreated(task));
+			// taskCreated: (task) => dispatch(actions.taskCreated(task))
+			submitTask: function submitTask(params) {
+				return dispatch(_actions2.default.submitTask(params));
 			}
+	
 		};
 	};
 	
@@ -31882,13 +31880,106 @@
 		value: true
 	});
 	
+	var _constants = __webpack_require__(235);
+	
+	var _constants2 = _interopRequireDefault(_constants);
+	
+	var _utils = __webpack_require__(182);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var getRequest = function getRequest(path, params, actionType) {
+		return function (dispatch) {
+			return _utils.APIManager.get(path, params).then(function (response) {
+				console.log('GET: ' + JSON.stringify(response));
+				var payload = response.results || response.result;
+	
+				dispatch({
+					type: actionType,
+					payload: payload
+				});
+			}).catch(function (err) {
+				console.log('ERR: ' + JSON.stringify(err));
+			});
+		};
+	};
+	
+	var postRequest = function postRequest(path, params, actionType) {
+		return function (dispatch) {
+			return _utils.APIManager.post(path, params).then(function (response) {
+				console.log('POST: ' + JSON.stringify(response));
+				var payload = response.results || response.result;
+	
+				dispatch({
+					type: actionType,
+					payload: payload
+				});
+			}).catch(function (err) {
+				console.log('ERR: ' + JSON.stringify(err));
+			});
+		};
+	};
+	
+	exports.default = {
+	
+		fetchTasks: function fetchTasks(params) {
+			return function (dispatch) {
+				return dispatch(getRequest('/api/task', params, _constants2.default.TASKS_RECEIVED));
+			};
+		},
+	
+		tasksReceived: function tasksReceived(tasks) {
+			return {
+				type: _constants2.default.TASKS_RECEIVED,
+				payload: tasks
+			};
+		},
+	
+		submitTask: function submitTask(params) {
+			return function (dispatch) {
+				return dispatch(postRequest('/api/task', params, _constants2.default.TASK_CREATED));
+			};
+		}
+		// taskCreated: (task) => {
+		// 	return {
+		// 		type: constants.TASK_CREATED,
+		// 		payload: task
+		// 	}
+		// }
+	};
+
+/***/ },
+/* 235 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	exports.default = {
+		TASKS_RECEIVED: 'TASKS_RECEIVED',
+		TASK_CREATED: 'TASK_CREATED'
+	
+	};
+
+/***/ },
+/* 236 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
 	var _redux = __webpack_require__(207);
 	
-	var _reduxThunk = __webpack_require__(235);
+	var _reduxThunk = __webpack_require__(237);
 	
 	var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 	
-	var _reducers = __webpack_require__(236);
+	var _reducers = __webpack_require__(238);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -31911,7 +32002,7 @@
 	};
 
 /***/ },
-/* 235 */
+/* 237 */
 /***/ function(module, exports) {
 
 	'use strict';
@@ -31939,7 +32030,7 @@
 	exports['default'] = thunk;
 
 /***/ },
-/* 236 */
+/* 238 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31949,7 +32040,7 @@
 	});
 	exports.taskReducer = undefined;
 	
-	var _taskReducer = __webpack_require__(237);
+	var _taskReducer = __webpack_require__(239);
 	
 	var _taskReducer2 = _interopRequireDefault(_taskReducer);
 	
@@ -31958,7 +32049,7 @@
 	exports.taskReducer = _taskReducer2.default;
 
 /***/ },
-/* 237 */
+/* 239 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -31967,7 +32058,7 @@
 		value: true
 	});
 	
-	var _constants = __webpack_require__(238);
+	var _constants = __webpack_require__(235);
 	
 	var _constants2 = _interopRequireDefault(_constants);
 	
@@ -32000,78 +32091,6 @@
 	
 			default:
 				return state;
-		}
-	};
-
-/***/ },
-/* 238 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	exports.default = {
-		TASKS_RECEIVED: 'TASKS_RECEIVED',
-		TASK_CREATED: 'TASK_CREATED'
-	
-	};
-
-/***/ },
-/* 239 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-		value: true
-	});
-	
-	var _constants = __webpack_require__(238);
-	
-	var _constants2 = _interopRequireDefault(_constants);
-	
-	var _utils = __webpack_require__(182);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	var getRequest = function getRequest(path, params, actionType) {
-		return function (dispatch) {
-			return _utils.APIManager.get(path, params).then(function (response) {
-				console.log('GET: ' + JSON.stringify(response));
-				var payload = response.results || response.result;
-	
-				dispatch({
-					type: actionType,
-					payload: payload
-				});
-			}).catch(function (err) {
-				console.log('ERR: ' + JSON.stringify(err));
-			});
-		};
-	};
-	
-	exports.default = {
-	
-		fetchTasks: function fetchTasks(params) {
-			return function (dispatch) {
-				return dispatch(getRequest('/api/task', params, _constants2.default.TASKS_RECEIVED));
-			};
-		},
-	
-		tasksReceived: function tasksReceived(tasks) {
-			return {
-				type: _constants2.default.TASKS_RECEIVED,
-				tasks: tasks
-			};
-		},
-	
-		taskCreated: function taskCreated(task) {
-			return {
-				type: _constants2.default.TASK_CREATED,
-				task: task
-			};
 		}
 	};
 

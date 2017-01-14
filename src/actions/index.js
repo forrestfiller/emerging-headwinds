@@ -20,6 +20,25 @@ const getRequest = (path, params, actionType) => {
 		})
 }
 
+const postRequest = (path, params, actionType) => {
+	return (dispatch) =>
+		APIManager.post(path, params)
+		.then(response => {
+			console.log('POST: '+JSON.stringify(response))
+			const payload = response.results || response.result
+
+			dispatch({
+				type: actionType,
+				payload: payload
+			})
+
+		})
+		.catch(err => {
+			console.log('ERR: '+JSON.stringify(err))
+
+		})
+}
+
 export default {
 
 	fetchTasks: (params) => {
@@ -31,14 +50,19 @@ export default {
 	tasksReceived: (tasks) => {
 		return {
 			type: constants.TASKS_RECEIVED,
-			tasks: tasks
+			payload: tasks
 		}
 	},
 
-	taskCreated: (task) => {
-		return {
-			type: constants.TASK_CREATED,
-			task: task
+	submitTask: (params) => {
+		return (dispatch) => {
+			return dispatch(postRequest('/api/task', params, constants.TASK_CREATED))
 		}
 	}
+	// taskCreated: (task) => {
+	// 	return {
+	// 		type: constants.TASK_CREATED,
+	// 		payload: task
+	// 	}
+	// }
 }
