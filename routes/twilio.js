@@ -27,8 +27,6 @@ router.post('/task', function(req, res, next) {
 	.catch(function(err){
 		console.log(err)
 	})
-
-	res.send('Hello!')
 })
 
 module.exports = router
