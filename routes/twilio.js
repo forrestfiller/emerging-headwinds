@@ -9,9 +9,25 @@ router.get('/task', function(req, res, next) {
 })
 
 router.post('/task', function(req, res, next) {
-	console.log('test'+JSON.stringify(req.body))
+	console.log('TWILIO'+JSON.stringify(req.body))
 
-	res.send('Hello Friend')
+	var message = req.body['Body']
+	var task = {
+		title: 'Twilio Task',
+		category: 'delivery',
+		description: message
+	}
+
+	controllers.task.post(task, false)
+	.then(function(result){
+		console.log('SUCCESS'+JSON.stringify(result))
+		res.send('Hello!')
+	})
+	.catch(function(err){
+		console.log(err)
+	})
+
+	res.send('Hello!')
 })
 
 module.exports = router
