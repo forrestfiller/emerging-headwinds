@@ -11,7 +11,7 @@ router.get('/task', function(req, res, next) {
 router.post('/task', function(req, res, next) {
 //  res.render('index', { title: 'twilio' })
 console.log('HEre is twilio: '+JSON.stringfiy(req.body))
-	res.send('Hello Friend! It is I, Twilio')
+	res.send('Hello Friend')
 })
 
 module.exports = router
