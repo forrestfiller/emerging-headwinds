@@ -32,7 +32,7 @@ router.post('/task', function(req, res, next) {
 
 		var profile = profiles[0]
 		task['profile'] = {
-			id: prodile.id,
+			id: profile.id,
 			username: profile.username
 		}
 
