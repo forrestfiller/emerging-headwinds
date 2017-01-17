@@ -21,15 +21,30 @@ router.post('/task', function(req, res, next) {
 		description: message
 	}
 
-	var from = req.body['From'] // phone # of sender
+	var from = req.body['From'].replace('+1','') // phone # of sender
+	
+	controllers.get({phone: from}, false)
 
-	controllers.task.post(task, false)
+	.then(function(profiles){
+		if (profiles.length == 0){
+			throw new Error('Go away.')
+			return
+		}
+
+		profile = profiles[0]
+		task['profile'] = {
+			id: prodile.id,
+			username: profile.username
+		}
+
+		return 	controllers.task.post(task, false)
+	})
 	.then(function(result){
 		console.log('SUCCESS'+JSON.stringify(result))
 		res.send('Hello!')
 	})
 	.catch(function(err){
-		console.log(err)
+		console.log('ERROR: '+err.message)
 	})
 })
 
