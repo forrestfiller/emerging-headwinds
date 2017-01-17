@@ -24,14 +24,13 @@ router.post('/task', function(req, res, next) {
 	var from = req.body['From'].replace('+1','') // phone # of sender
 
 	controllers.profile.get({phone: from}, false)
-
 	.then(function(profiles){
 		if (profiles.length == 0){
 			throw new Error('Go away.')
 			return
 		}
 
-		profile = profiles[0]
+		var profile = profiles[0]
 		task['profile'] = {
 			id: prodile.id,
 			username: profile.username
