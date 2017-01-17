@@ -24372,6 +24372,12 @@
 	
 	exports.default = {
 	
+		checkCurrentUser: function checkCurrentUser() {
+			return function (dispatch) {
+				return dispatch(getRequest('/account/currentuser', {}, _constants2.default.USER_LOGGED_IN));
+			};
+		},
+	
 		login: function login(credentials) {
 			return function (dispatch) {
 				return dispatch(postRequest('/account/login', credentials, _constants2.default.USER_LOGGED_IN));
@@ -24573,6 +24579,12 @@
 		}
 	
 		_createClass(Account, [{
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				if (this.props.user == null) //check current user
+					this.props.checkCurrentUser();
+			}
+		}, {
 			key: 'login',
 			value: function login(credentials) {
 				console.log('Login' + JSON.stringify(credentials));
@@ -24597,7 +24609,12 @@
 						null,
 						'Account'
 					),
-					_react2.default.createElement(_view.Authenticate, { onLogin: this.login.bind(this), onRegister: this.register.bind(this) })
+					this.props.user == null ? _react2.default.createElement(_view.Authenticate, { onLogin: this.login.bind(this), onRegister: this.register.bind(this) }) : _react2.default.createElement(
+						'h2',
+						null,
+						'Welcome ',
+						this.props.user.username
+					)
 				);
 			}
 		}]);
@@ -24618,6 +24635,9 @@
 			},
 			login: function login(credentials) {
 				return dispatch(_actions2.default.login(credentials));
+			},
+			checkCurrentUser: function checkCurrentUser() {
+				return dispatch(_actions2.default.checkCurrentUser());
 			}
 		};
 	};
@@ -24801,11 +24821,13 @@
 	
 			case _constants2.default.PROFILE_CREATED:
 				console.log('PROFILE_CREATED: ' + JSON.stringify(action.payload));
+				updated['user'] = action.payload;
 	
 				return updated;
 	
 			case _constants2.default.USER_LOGGED_IN:
 				console.log('USER_LOGGED_IN:' + JSON.stringify(action.payload));
+				updated['user'] = action.payload;
 				return updated;
 	
 			default:

@@ -4,11 +4,17 @@ import { Authenticate } from '../view'
 import actions from '../../actions'
 
 class Account extends Component {
+
+	componentDidMount(){
+		if (this.props.user == null)	//check current user
+			this.props.checkCurrentUser()
+	}
+
 	login(credentials) {
 		console.log('Login'+JSON.stringify(credentials))
 		this.props.login(credentials)
 		.then(response => {
-			
+
 
 		})
 		.catch(err => {
@@ -25,7 +31,10 @@ class Account extends Component {
 		return (
 			<div>
 				<h2>Account</h2>
-				<Authenticate onLogin={this.login.bind(this)} onRegister={this.register.bind(this)} />
+				{
+					(this.props.user == null) ? <Authenticate onLogin={this.login.bind(this)} onRegister={this.register.bind(this)} /> : <h2>Welcome {this.props.user.username}</h2>
+				}
+
 			</div>
 
 		)
@@ -41,7 +50,8 @@ const stateToProps = (state) => {
 const dispatchToProps = (dispatch) => {
 	return {
 		register: (credentials) => dispatch(actions.register(credentials)),
-		login: (credentials) => dispatch(actions.login(credentials))
+		login: (credentials) => dispatch(actions.login(credentials)),
+		checkCurrentUser: () => dispatch(actions.checkCurrentUser())
 	}
 }
 

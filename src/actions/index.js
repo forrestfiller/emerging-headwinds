@@ -42,6 +42,12 @@ const postRequest = (path, params, actionType) => {
 
 export default {
 
+	checkCurrentUser: () => {
+		return (dispatch) => {
+			return dispatch(getRequest('/account/currentuser', {}, constants.USER_LOGGED_IN))
+		}
+	},
+
 	login: (credentials) => {
 		return (dispatch) => {
 			return dispatch(postRequest('/account/login', credentials, constants.USER_LOGGED_IN))
