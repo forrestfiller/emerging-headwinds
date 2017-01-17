@@ -24347,7 +24347,8 @@
 					params: params
 				});
 			}).catch(function (err) {
-				console.log('ERR: ' + JSON.stringify(err.message));
+				//console.log('ERR: '+JSON.stringify(err.message))
+				throw err;
 			});
 		};
 	};
@@ -24363,7 +24364,8 @@
 					payload: payload
 				});
 			}).catch(function (err) {
-				console.log('ERR: ' + JSON.stringify(err.message));
+				//console.log('ERR: '+JSON.stringify(err.message))
+				throw err;
 			});
 		};
 	};
@@ -24574,7 +24576,9 @@
 			key: 'login',
 			value: function login(credentials) {
 				console.log('Login' + JSON.stringify(credentials));
-				this.props.login(credentials);
+				this.props.login(credentials).then(function (response) {}).catch(function (err) {
+					alert(err.message);
+				});
 			}
 		}, {
 			key: 'register',

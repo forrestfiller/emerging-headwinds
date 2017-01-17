@@ -32,16 +32,31 @@ router.get('/:action', function(req, res, next) {
 				})
 				return
 			}
-
-			res.json({
-				confirmation:'success',
-				id: decoded.id
+			controllers.profile
+			.getById(decoded.id, false)
+			.then(function(result){
+				res.json({
+					confirmation: 'success',
+					user: result
+				})
+				return
+			})
+			.catch(function(error){
+				res.json({
+					confirmation: 'fail',
+					message: error
+				})
+				return
 			})
 		})
 	}
 
 	if (action == 'logout'){ // logout
-
+		req.session.reset()
+		res.json({
+			confirmation:'success',
+			user:null
+		})
 	}
 })
 

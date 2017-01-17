@@ -7,6 +7,13 @@ class Account extends Component {
 	login(credentials) {
 		console.log('Login'+JSON.stringify(credentials))
 		this.props.login(credentials)
+		.then(response => {
+			
+
+		})
+		.catch(err => {
+			alert(err.message)
+		})
 
 	}
 	register(credentials){
