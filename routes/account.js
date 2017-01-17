@@ -76,19 +76,13 @@ router.post('/:action', function(req, res, next) {
 		.get({email: req.body.email}, true)
 		.then(function(results){
 			if (results == 0){
-				res.json({
-					confirmation:'fail',
-					message: 'User not found'
-				})
+				throw new Error('User not found.')
 				return
 			}
 			var profile = results[0]
 			var isPasswordCorrect = bcrypt.compareSync(req.body.password, profile.password)
 			if (isPasswordCorrect == false){
-				res.json({
-					confirmation: 'fail',
-					message: 'wrong password'
-				})
+				throw new Error('wrong password.')
 				return
 			}
 
@@ -101,11 +95,10 @@ router.post('/:action', function(req, res, next) {
 			})
 			return
 		})
-
 		.catch(function(err){
 			res.json({
 				confirmation: 'fail',
-				message: err
+				message: err.message
 			})
 		})
 	}
