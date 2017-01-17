@@ -5,6 +5,7 @@ var jwt = require('jsonwebtoken')
 var bcrypt = require('bcryptjs')
 
 router.get('/:action', function(req, res, next) {
+	
 	var action = req.params.action
 	if (action == 'currentuser'){
 		if (req.session == null){
