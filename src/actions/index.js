@@ -6,7 +6,7 @@ const getRequest = (path, params, actionType) => {
 		APIManager.get(path, params)
 		.then(response => {
 //			console.log('GET: '+JSON.stringify(response))
-			const payload = response.results || response.result
+			const payload = response.results || response.result || response.user
 
 			dispatch({
 				type: actionType,
@@ -26,7 +26,7 @@ const postRequest = (path, params, actionType) => {
 		APIManager.post(path, params)
 		.then(response => {
 //			console.log('POST: '+JSON.stringify(response))
-			const payload = response.results || response.result
+			const payload = response.results || response.result || response.user
 
 			dispatch({
 				type: actionType,
@@ -41,6 +41,18 @@ const postRequest = (path, params, actionType) => {
 }
 
 export default {
+
+	login: (credentials) => {
+		return (dispatch) => {
+			return dispatch(postRequest('/account/login', credentials, constants.USER_LOGGED_IN))
+		}
+	},
+
+	register: (credentials) => {
+		return (dispatch) => {
+			return dispatch(postRequest('/account/register', credentials, constants.PROFILE_CREATED))
+		}
+	},
 
 	selectCategory: (category) => {
 		return {
