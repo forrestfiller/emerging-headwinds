@@ -5,11 +5,10 @@ import actions from '../../actions'
 class Task extends Component {
 
 	componentDidMount(){
-//		grab the task from the store:
+
 	}
 
 	render(){
-		// grab the task from the store:
 		const taskId = this.props.params.id
 		const task = this.props.tasks[taskId]
 		return (
@@ -18,6 +17,16 @@ class Task extends Component {
 				{ task.description }<br />
 				{ task.category }<br />
 				{ task.profile.username }<br />
+
+				{
+					(this.props.account.user == null) ? <h3>Please login or register to reply</h3> :
+					<div>
+						<h3>Reply</h3>
+						<textarea placeholder="Enter Message to Respond"></textarea>
+						<br />
+						<button>Submit</button>
+					</div>
+				}
 			</div>
 		)
 	}
@@ -25,7 +34,8 @@ class Task extends Component {
 
 const stateToProps = (state) => {
 	return {
-		tasks: state.task
+		tasks: state.task,
+		account: state.account
 	}
 }
 

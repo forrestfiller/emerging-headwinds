@@ -37544,13 +37544,10 @@
 	
 		_createClass(Task, [{
 			key: 'componentDidMount',
-			value: function componentDidMount() {
-				//		grab the task from the store:
-			}
+			value: function componentDidMount() {}
 		}, {
 			key: 'render',
 			value: function render() {
-				// grab the task from the store:
 				var taskId = this.props.params.id;
 				var task = this.props.tasks[taskId];
 				return _react2.default.createElement(
@@ -37563,7 +37560,27 @@
 					task.category,
 					_react2.default.createElement('br', null),
 					task.profile.username,
-					_react2.default.createElement('br', null)
+					_react2.default.createElement('br', null),
+					this.props.account.user == null ? _react2.default.createElement(
+						'h3',
+						null,
+						'Please login or register to reply'
+					) : _react2.default.createElement(
+						'div',
+						null,
+						_react2.default.createElement(
+							'h3',
+							null,
+							'Reply'
+						),
+						_react2.default.createElement('textarea', { placeholder: 'Enter Message to Respond' }),
+						_react2.default.createElement('br', null),
+						_react2.default.createElement(
+							'button',
+							null,
+							'Submit'
+						)
+					)
 				);
 			}
 		}]);
@@ -37573,7 +37590,8 @@
 	
 	var stateToProps = function stateToProps(state) {
 		return {
-			tasks: state.task
+			tasks: state.task,
+			account: state.account
 		};
 	};
 	
@@ -37601,9 +37619,21 @@
 	
 		return _react2.default.createElement(
 			'div',
-			null,
-			'Split layout',
-			_react2.default.createElement(_containers.Task, null)
+			{ className: 'container' },
+			_react2.default.createElement(
+				'div',
+				{ className: 'row' },
+				_react2.default.createElement(
+					'div',
+					{ className: 'col-md-8' },
+					_react2.default.createElement(_containers.Task, props)
+				),
+				_react2.default.createElement(
+					'div',
+					{ className: 'col-md-4' },
+					_react2.default.createElement(_containers.Account, null)
+				)
+			)
 		);
 	};
 
