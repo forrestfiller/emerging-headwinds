@@ -5,7 +5,7 @@ var jwt = require('jsonwebtoken')
 var bcrypt = require('bcryptjs')
 
 router.get('/:action', function(req, res, next) {
-	
+
 	var action = req.params.action
 	if (action == 'currentuser'){
 		if (req.session == null){
@@ -27,12 +27,14 @@ router.get('/:action', function(req, res, next) {
 		// verify token
 		jwt.verify(req.session.token, process.env.TOKEN_SECRET, function(err, decoded){
 			if (err){
+				req.session.reset()
 				res.json({
-					confirmation:'fail',
-					message: 'Access Denied'
+					confirmation:'success',
+					user: null
 				})
 				return
 			}
+			
 			controllers.profile
 			.getById(decoded.id, false)
 			.then(function(result){
