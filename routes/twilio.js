@@ -21,17 +21,24 @@ router.post('/task', function(req, res, next) {
 	var validCategories = ['delivery', 'house cleaning', 'dog walking', 'misc']
 
 	var parts = message.split('.') // hopefully this is three parts
-	
+
 	var category = (parts.length == 1) ? 'misc' : parts[1].trim().toLowerCase()
 	var description = null
 
 	if (validCategories.indexOf(category) == -1){
 		category = 'misc'
-		description = parts[1].trim()
+		if (parts.length == 2){
+			description = parts[1].trim()
+		}
+		else {
+			description = (parts[1].trim())+(parts[2].trim())
+		}
+		else {
+			description = (parts.length < 3) ? '' : parts[2].trim()
+		}
 	}
-	else {
-		description = (parts.length < 3) ? '' : parts[2].trim()
-	}
+
+
 
 	var task = {
 		title: parts[0],
