@@ -4,7 +4,7 @@ var initialState = {
 //	all: null,
 	selectedCategory: 'dog walking',
 	categories: [
-		'misc'
+		'misc',
 		'delivery',
 		'dog walking',
 		'house cleaning'
