@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 class Categories extends Component {
 	selectCategory(category, event){
 		event.preventDefault()
-//		console.log('selectCategory '+category)
 		this.props.selectCategory(category)
 	}
 
@@ -38,7 +37,6 @@ const stateToProps = (state) => {
 const dispatchToProps = (dispatch) => {
 	return {
 		selectCategory: (category) => dispatch(actions.selectCategory(category))
-
 	}
 }
 

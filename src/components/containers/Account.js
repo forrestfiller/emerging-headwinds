@@ -10,7 +10,7 @@ class Account extends Component {
 			return
 		this.props.checkCurrentUser()
 		.then(response => {
-			
+
 		})
 		.catch(err => {
 			console.log('ERROR:'+err.message)
@@ -22,18 +22,17 @@ class Account extends Component {
 		this.props.login(credentials)
 		.then(response => {
 
-
 		})
 		.catch(err => {
 			alert(err.message)
 		})
-
 	}
+
 	register(credentials){
 		console.log('Login'+JSON.stringify(credentials))
 		this.props.register(credentials)
-
 	}
+
 	render(){
 		return (
 			<div>
@@ -41,9 +40,7 @@ class Account extends Component {
 				{
 					(this.props.user == null) ? <Authenticate onLogin={this.login.bind(this)} onRegister={this.register.bind(this)} /> : <h2>Welcome {this.props.user.username}</h2>
 				}
-
 			</div>
-
 		)
 	}
 }

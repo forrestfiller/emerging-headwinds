@@ -20,7 +20,6 @@ export default {
 					reject(new Error(response.body.message))
 					return
 				}
-
 				resolve(response.body)
 			})
 		})
@@ -41,7 +40,6 @@ export default {
 					reject(new Error(response.body.message))
 					return
 				}
-
 				resolve(response.body)
 			})
 		})
@@ -62,7 +60,6 @@ export default {
 					reject(err)
 					return
 				}
-
 				const uploaded = resp.body
 				console.log('UPLOAD COMPLETE: '+JSON.stringify(uploaded))
 				resolve(uploaded)

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 
 class CreateTask extends Component {
-
 	constructor(){
 		super()
 		this.state = {
@@ -38,6 +37,8 @@ class CreateTask extends Component {
 					<option value="delivery">Delivery</option>
 					<option value="dog walking">Dog Walking</option>
 					<option value="house cleaning">House Clearning</option>
+					<option value="misc">Miscellaneous</option>
+					<option value="jobs">Jobs</option>
 				</select>
 				<button onClick={this.submitTask.bind(this)}>Submit</button>
 			</div>

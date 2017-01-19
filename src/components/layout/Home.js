@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { Tasks, Categories, Account } from '../containers'
 
 class Home extends Component {
-
 	render(){
 		return (
 			<div className="row">
@@ -15,7 +14,6 @@ class Home extends Component {
 				<div className="col-md-2">
 					<Account />
 				</div>
-
 			</div>
 		)
 	}

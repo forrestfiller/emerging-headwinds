@@ -17,7 +17,6 @@ const getRequest = (path, params, actionType) => {
 		.catch(err => {
 			//console.log('ERR: '+JSON.stringify(err.message))
 			throw err
-
 		})
 }
 
@@ -32,7 +31,6 @@ const postRequest = (path, params, actionType) => {
 				type: actionType,
 				payload: payload
 			})
-
 		})
 		.catch(err => {
 			//console.log('ERR: '+JSON.stringify(err.message))
@@ -85,5 +83,4 @@ export default {
 			return dispatch(postRequest('/api/task', params, constants.TASK_CREATED))
 		}
 	}
-
 }

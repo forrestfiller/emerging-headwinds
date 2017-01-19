@@ -5,7 +5,6 @@ import actions from '../../actions'
 class Task extends Component {
 
 	componentDidMount(){
-
 	}
 
 	render(){
@@ -17,7 +16,6 @@ class Task extends Component {
 				{ task.description }<br />
 				{ task.category }<br />
 				{ task.profile.username }<br />
-
 				{
 					(this.props.account.user == null) ? <h3>Please login or register to reply</h3> :
 					<div>

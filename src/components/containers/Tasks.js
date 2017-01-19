@@ -50,7 +50,7 @@ class Tasks extends Component {
 								return (
 									<li key={task.id}>
 										<Link to={'/task/'+task.id}>
-											{task.title}, {task.category}
+											{task.title}, Filed under: <strong>{task.category}</strong>
 										</Link>
 									</li>
 								)
@@ -73,9 +73,7 @@ const dispatchToProps = (dispatch) => {
 	return {
 		fetchTasks: (params) => dispatch(actions.fetchTasks(params)),
 		tasksReceived: (tasks) => dispatch(actions.tasksReceived(tasks)),
-		// taskCreated: (task) => dispatch(actions.taskCreated(task))
 		submitTask: (params) => dispatch(actions.submitTask(params))
-
 	}
 }
 
