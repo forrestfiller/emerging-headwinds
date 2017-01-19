@@ -31,7 +31,7 @@ router.post('/task', function(req, res, next) {
 			description = parts[1].trim()
 		}
 		else {
-			description = (parts[1].trim())+'. '+(parts[2].trim())
+			description = (parts[1].trim())+'.'+' '+(parts[2].trim())
 		}
 	}
 	else {
