@@ -32492,7 +32492,7 @@
 	
 	var initialState = {
 		//	all: null,
-		selectedCategory: 'dog walking',
+		selectedCategory: 'delivery',
 		categories: ['misc', 'delivery', 'dog walking', 'house cleaning']
 	};
 	
@@ -32504,12 +32504,17 @@
 	
 		switch (action.type) {
 			case _constants2.default.TASKS_RECEIVED:
-				// console.log('TASKS_RECEIVED: '+JSON.stringify(action.params))
+	
 				var keys = Object.keys(action.params);
 				keys.forEach(function (key, i) {
 					var value = action.params[key]; // delivery, dog walking,etc
 					updated[value] = action.payload;
 				});
+	
+				action.payload.forEach(function (task, i) {
+					updated[task.id] = task;
+				});
+	
 				//		console.log('TASKS_RECEIVED: '+JSON.stringify(updated))
 				return updated;
 	
@@ -37508,6 +37513,12 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _reactRedux = __webpack_require__(197);
+	
+	var _actions = __webpack_require__(235);
+	
+	var _actions2 = _interopRequireDefault(_actions);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -37526,12 +37537,27 @@
 		}
 	
 		_createClass(Task, [{
+			key: 'componentDidMount',
+			value: function componentDidMount() {
+				//		grab the task from the store:
+			}
+		}, {
 			key: 'render',
 			value: function render() {
+				// grab the task from the store:
+				var taskId = this.props.params.id;
+				var task = this.props.tasks[taskId];
 				return _react2.default.createElement(
 					'div',
 					null,
-					'Task Container!'
+					task.title,
+					_react2.default.createElement('br', null),
+					task.description,
+					_react2.default.createElement('br', null),
+					task.category,
+					_react2.default.createElement('br', null),
+					task.profile.username,
+					_react2.default.createElement('br', null)
 				);
 			}
 		}]);
@@ -37539,7 +37565,13 @@
 		return Task;
 	}(_react.Component);
 	
-	exports.default = Task;
+	var stateToProps = function stateToProps(state) {
+		return {
+			tasks: state.task
+		};
+	};
+	
+	exports.default = (0, _reactRedux.connect)(stateToProps)(Task);
 
 /***/ }
 /******/ ]);
