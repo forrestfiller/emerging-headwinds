@@ -3,6 +3,7 @@ import { APIManager } from '../../utils'
 import { CreateTask } from '../view'
 import { connect } from 'react-redux'
 import actions from '../../actions'
+import { Link } from 'react-router'
 
 class Tasks extends Component {
 	getTasks(){
@@ -46,7 +47,13 @@ class Tasks extends Component {
 				<ol>
 					{ (this.props.tasks[this.props.tasks.selectedCategory] == null) ? null :
 							this.props.tasks[this.props.tasks.selectedCategory].map((task, i) => {
-								return <li key={task.id}>{task.title}, {task.category}</li>
+								return (
+									<li key={task.id}>
+										<Link to={'/task/'+task.id}>
+											{task.title}, {task.category}
+										</Link>
+									</li>
+								)
 							})
 					}
 				</ol>
