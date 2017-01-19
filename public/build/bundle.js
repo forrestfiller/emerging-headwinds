@@ -56,8 +56,6 @@
 	
 	var _layout = __webpack_require__(178);
 	
-	var _containers = __webpack_require__(180);
-	
 	var _reactRedux = __webpack_require__(197);
 	
 	var _stores = __webpack_require__(239);
@@ -75,7 +73,7 @@
 			_reactRouter.Router,
 			{ history: _reactRouter.browserHistory },
 			_react2.default.createElement(_reactRouter.Route, { path: '/', component: _layout.Home }),
-			_react2.default.createElement(_reactRouter.Route, { path: '/task/:id', component: _containers.Task })
+			_react2.default.createElement(_reactRouter.Route, { path: '/task/:id', component: _layout.Split })
 		)
 	);
 	
@@ -21517,15 +21515,20 @@
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
-	exports.Home = undefined;
+	exports.Split = exports.Home = undefined;
 	
 	var _Home = __webpack_require__(179);
 	
 	var _Home2 = _interopRequireDefault(_Home);
 	
+	var _Split = __webpack_require__(298);
+	
+	var _Split2 = _interopRequireDefault(_Split);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	exports.Home = _Home2.default;
+	exports.Split = _Split2.default;
 
 /***/ },
 /* 179 */
@@ -37575,6 +37578,34 @@
 	};
 	
 	exports.default = (0, _reactRedux.connect)(stateToProps)(Task);
+
+/***/ },
+/* 298 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _containers = __webpack_require__(180);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	exports.default = function (props) {
+	
+		return _react2.default.createElement(
+			'div',
+			null,
+			'Split layout',
+			_react2.default.createElement(_containers.Task, null)
+		);
+	};
 
 /***/ }
 /******/ ]);
