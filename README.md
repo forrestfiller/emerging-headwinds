@@ -4,9 +4,9 @@
 
 This SPA makes posting jobs and tasks easier. I have tried to keep the code agnostic and modular. Perhaps more importantly, it is designed to be emotionally fulfilling.
 
-The backend is written in Node.js, frontend is in React with Redux, using React-router. I'm currently using Heroku for my deployment. The UI is a little lame for now (file an issue or feature request!). I will make it lovely soon.
+The backend is written in Node.js, frontend is in React with Redux, using React-router. I'm currently using Heroku for my deployment. The UI is a little lame for now. I will make it lovely soon.
 
-If you register/login and then wish to logout, for now, after the top level domain, drop in '/account/logout' and you should see a lovely JSON object letting you know that you were successful and that you, the user, are now null! I'll add a button in the near future (but this is more fun, right? Ok, file another feature request...). Similarly, if you're curious to know your status, instead of '/account/logout' put in '/account/currentuser' and have a look at your JSON.
+If you register/login and then wish to logout, for now, after the top level domain, drop in '/account/logout' and you should see a lovely JSON object letting you know that you were successful and that you, the user, are now null! I'll add a button in the near future (but this is more fun, right?). Similarly, if you're curious to know whether or not you are logged in, instead of entering '/account/logout' put in '/account/currentuser' and have a look at your JSON.
 
 ###Build Instructions
 
@@ -24,9 +24,9 @@ Note: just a friendly reminder that the Twilio integration in this project won't
 
 3. Run your testing database and server with: ```webpack -w```, ```mongod```, and ```nodemon``` in three separate tabs or windows in your terminal.
 
-4. Head on over to **localhost:3000** in your web browser of choice.
+4. Head on over to **localhost:3000** in your web browser of choice. When this is working well, you can consider deploying live.
 
-5. When you feel good about things working (come on webpack, stop crashing!), then push your code up to live and SMS those wishes over to server.
+5. If you would like to incorporate the SMS component, you will need a Twilio account and a phone number for use with this project. You set up a POST webhook under messaging from your Twilio number to your soon-to-be-deployed domain at 'http(s)://www.yourDomainName.com/twilio/task'. Be sure to SMS your Twilio number in the following format: "Title. Category. Description." it will post the SMS job/task request to your server, and will render the post on the app. Neat!
 
 ###To Do's
 - Finish wiring up react-router, which doesn't currently accept a refresh.
