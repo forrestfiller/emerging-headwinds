@@ -19,23 +19,38 @@ class Task extends Component {
 	submitMessage(event){
 		event.preventDefault()
 		console.log('submitMessage'+JSON.stringify(this.state.message))
+
 		let updated = Object.assign({}, this.state.message)
 		const user = this.props.account.user
+
 		updated['profile'] = {
 			id: user.id,
 			username: user.username
 		}
-		updated['task'] = this.props.params.id
-		this.props.createMessage(updated)
 
+		updated['task'] = this.props.params.id
+
+		const taskId = this.props.params.id
+		const task = this.props.tasks[taskId]
+
+		this.props.createMessage(updated)
 		.then(response => {
-	//		console.log('message created: '+JSON.stringify(response))
-			alert('thanks for reply, good luck')
-			// now lets send a notification to the origianl sender via sms...
+			const params = {
+				recipient: task.profile.id,
+				text: 'Hello from you best Pal!!'
+			}
+
+			return this.props.notify(params)
+
 		})
+		.then(response => {
+			alert('Thank you for submitting your bit to assist! Good luck!')
+		})
+
 		.catch(err => {
 			console.log('message created failed: '+JSON.stringify(err))
 		})
+
 	}
 
 	updateMessage(event){
@@ -79,7 +94,8 @@ const stateToProps = (state) => {
 
 const dispatchToProps = (dispatch) => {
 	return {
-		createMessage: (params	) => dispatch(actions.createMessage(params))
+		createMessage: (params) => dispatch(actions.createMessage(params)),
+		notify: (params) => dispatch(actions.notify(params))
 		}
 }
 

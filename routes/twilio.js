@@ -8,22 +8,69 @@ router.get('/task', function(req, res, next) {
 		confirmation: 'success',
 		message:'it worked'
 	})
+
 })
 
 router.get('/notify', function(req, res, next) {
 // sendSMS: function(recipient, message, completion){
 	utils.TwilioHelper.sendSMS('2122039317','xoxo are we working yet?')
-
 	.then(function(message){
 
 		res.json({
 			confirmation: 'success',
 			message: message
 		})
+
 	})
 
 	.catch(function(err){
 
+		res.json({
+			confirmation: 'fail',
+			message: err
+		})
+
+	})
+})
+
+router.post('/notify', function(req, res, next) {
+	console.log(JSON.stringify(req.body))
+
+	if (req.body.recipient == null){
+		res.json({
+			confirmation: 'fail',
+			message: 'Please specify a recipient.'
+		})
+
+		return
+	}
+
+	if (req.body.text == null){
+		res.json({
+			confirmation: 'fail',
+			message: 'Please include a message.'
+		})
+
+		return
+	}
+
+	controllers.profile
+	.getById(req.body.recipient, false) // get the profile first
+	.then(function(profile){
+
+		return utils.TwilioHelper.sendSMS(profile.phone, req.body.text)
+	})
+
+	.then(function(message){
+		res.json({
+			confirmation: 'success',
+			message: message
+		})
+
+		return message
+	})
+
+	.catch(function(err){
 		res.json({
 			confirmation: 'fail',
 			message: err
@@ -83,10 +130,12 @@ router.post('/task', function(req, res, next) {
 
 		return 	controllers.task.post(task, false)
 	})
+
 	.then(function(result){
 		console.log('SUCCESS'+JSON.stringify(result))
 		res.send('Hello!')
 	})
+	
 	.catch(function(err){
 		console.log('ERROR: '+err.message)
 	})

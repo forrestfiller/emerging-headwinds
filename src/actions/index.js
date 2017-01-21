@@ -89,9 +89,16 @@ export default {
 			return dispatch(postRequest('/api/task', params, constants.TASK_CREATED))
 		}
 	},
+
 	createMessage: (params) => {
 		return (dispatch) => {
 			return dispatch(postRequest('/api/message', params, constants.MESSAGE_CREATED))
+		}
+	},
+
+	notify: (params) => {
+		return (dispatch) => {
+			return dispatch(postRequest('/twilio/notify', params, null))
 		}
 	}
 }
