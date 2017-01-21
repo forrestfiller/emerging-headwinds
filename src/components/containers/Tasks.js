@@ -42,23 +42,28 @@ class Tasks extends Component {
 
 	render(){
 		return (
-			<div>
-				<h2>Tasks</h2>
-				<ol>
+			<section id="banner">
+				<div className="content">
+					<h3>Current Tasks</h3>
 					{ (this.props.tasks[this.props.tasks.selectedCategory] == null) ? null :
 							this.props.tasks[this.props.tasks.selectedCategory].map((task, i) => {
 								return (
-									<li key={task.id}>
+									<div key={task.id} className="box">
 										<Link to={'/task/'+task.id}>
-											{task.title}, Filed under: <strong>{task.category}</strong>
+											<h3>{task.title}</h3>
 										</Link>
-									</li>
+
+										<Link to={'/task/'+task.id}>
+											{task.description}
+										</Link>
+									</div>
 								)
 							})
 					}
-				</ol>
+
+				</div>
 				<CreateTask onSubmitTask={this.createTask.bind(this)}/>
-			</div>
+			</section>
 		)
 	}
 }
