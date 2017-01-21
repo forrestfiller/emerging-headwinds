@@ -21,7 +21,11 @@ Note: just a friendly reminder that the Twilio integration in this project won't
     - ```DB_URL=mongodb://localhost/yourProjectNameHere```
     - ```SESSION_SECRET=whateverThisSessionSecretIs```
     - ```TOKEN_SECRET=thowASecretTokenIn!```
+    - ```TWILIO_SID=grabThisFromYourTwilioConsole```
+    - ```TWILIO_AUTH_TOKEN=grabThisFromYourTwilioConsole```
+    - ```TWILIO_FROM=yourTwilioPhoneNumber```
 
+    [Docs for initial testing with Twilio](https://github.com/twilio/twilio-node/blob/master/examples/example.js#L2)
 3. Run your testing database and server with: ```webpack -w```, ```mongod```, and ```nodemon``` in three separate tabs or windows in your terminal.
 
 4. Head on over to **localhost:3000** in your web browser of choice. When this is working well, you can consider deploying live.
