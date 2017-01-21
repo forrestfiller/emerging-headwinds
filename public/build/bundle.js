@@ -32097,6 +32097,7 @@
 					payload: payload,
 					params: params
 				});
+				return response;
 			}).catch(function (err) {
 				//console.log('ERR: '+JSON.stringify(err.message))
 				throw err;
@@ -32112,8 +32113,10 @@
 	
 				dispatch({
 					type: actionType,
-					payload: payload
+					payload: payload,
+					params: params
 				});
+				return response;
 			}).catch(function (err) {
 				//console.log('ERR: '+JSON.stringify(err.message))
 				throw err;
@@ -32165,6 +32168,11 @@
 			return function (dispatch) {
 				return dispatch(postRequest('/api/task', params, _constants2.default.TASK_CREATED));
 			};
+		},
+		createMessage: function createMessage(params) {
+			return function (dispatch) {
+				return dispatch(postRequest('/api/message', params, _constants2.default.MESSAGE_CREATED));
+			};
 		}
 	};
 
@@ -32182,7 +32190,8 @@
 		TASK_CREATED: 'TASK_CREATED',
 		CATEGORY_SELECTED: 'CATEGORY_SELECTED',
 		PROFILE_CREATED: 'PROFILE_CREATED',
-		USER_LOGGED_IN: 'USER_LOGGED_IN'
+		USER_LOGGED_IN: 'USER_LOGGED_IN',
+		MESSAGE_CREATED: 'MESSAGE_CREATED'
 	};
 
 /***/ },
@@ -37346,17 +37355,55 @@
 		function Task() {
 			_classCallCheck(this, Task);
 	
-			return _possibleConstructorReturn(this, (Task.__proto__ || Object.getPrototypeOf(Task)).apply(this, arguments));
+			var _this = _possibleConstructorReturn(this, (Task.__proto__ || Object.getPrototypeOf(Task)).call(this));
+	
+			_this.state = {
+				message: {
+					text: ''
+				}
+			};
+			return _this;
 		}
 	
 		_createClass(Task, [{
 			key: 'componentDidMount',
-			value: function componentDidMount() {}
+			value: function componentDidMount() {
+				console.log('componentDidMount: ' + JSON.stringify(this.props));
+			}
+		}, {
+			key: 'submitMessage',
+			value: function submitMessage(event) {
+				event.preventDefault();
+				console.log('submitMessage' + JSON.stringify(this.state.message));
+				var updated = Object.assign({}, this.state.message);
+				var user = this.props.account.user;
+				updated['profile'] = {
+					id: user.id,
+					username: user.username
+				};
+				updated['task'] = this.props.params.id;
+				this.props.createMessage(updated).then(function (response) {
+					//		console.log('message created: '+JSON.stringify(response))
+					alert('thanks for reply, good luck');
+				}).catch(function (err) {
+					console.log('message created failed: ' + JSON.stringify(err));
+				});
+			}
+		}, {
+			key: 'updateMessage',
+			value: function updateMessage(event) {
+				var updated = Object.assign({}, this.state.message);
+				updated['text'] = event.target.value;
+				this.setState({
+					message: updated
+				});
+			}
 		}, {
 			key: 'render',
 			value: function render() {
 				var taskId = this.props.params.id;
 				var task = this.props.tasks[taskId];
+	
 				return _react2.default.createElement(
 					'div',
 					null,
@@ -37380,11 +37427,11 @@
 							null,
 							'Reply'
 						),
-						_react2.default.createElement('textarea', { placeholder: 'Enter Message to Respond' }),
+						_react2.default.createElement('textarea', { onChange: this.updateMessage.bind(this), placeholder: 'Enter Message to Respond' }),
 						_react2.default.createElement('br', null),
 						_react2.default.createElement(
 							'button',
-							null,
+							{ onClick: this.submitMessage.bind(this) },
 							'Submit'
 						)
 					)
@@ -37402,7 +37449,15 @@
 		};
 	};
 	
-	exports.default = (0, _reactRedux.connect)(stateToProps)(Task);
+	var dispatchToProps = function dispatchToProps(dispatch) {
+		return {
+			createMessage: function createMessage(params) {
+				return dispatch(_actions2.default.createMessage(params));
+			}
+		};
+	};
+	
+	exports.default = (0, _reactRedux.connect)(stateToProps, dispatchToProps)(Task);
 
 /***/ },
 /* 293 */
