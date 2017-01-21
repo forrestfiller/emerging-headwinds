@@ -1,11 +1,33 @@
 var express = require('express')
 var router = express.Router()
 var controllers = require('../controllers')
+var utils = require('../utils')
 
 router.get('/task', function(req, res, next) {
   res.json({
 		confirmation: 'success',
 		message:'it worked'
+	})
+})
+
+router.get('/notify', function(req, res, next) {
+// sendSMS: function(recipient, message, completion){
+	utils.TwilioHelper.sendSMS('2122039317','xoxo are we working yet?')
+
+	.then(function(message){
+
+		res.json({
+			confirmation: 'success',
+			message: message
+		})
+	})
+
+	.catch(function(err){
+
+		res.json({
+			confirmation: 'fail',
+			message: err
+		})
 	})
 })
 
@@ -31,15 +53,12 @@ router.post('/task', function(req, res, next) {
 			description = parts[1].trim()
 		}
 		else {
-			description = (parts[1].trim())+'.'+' '+(parts[2].trim()) // edge case not done! 
+			description = (parts[1].trim())+'.'+' '+(parts[2].trim()) // edge case not done!
 		}
 	}
 	else {
 		description = (parts.length < 3) ? '' : parts[2].trim()
 	}
-
-
-
 
 	var task = {
 		title: parts[0],

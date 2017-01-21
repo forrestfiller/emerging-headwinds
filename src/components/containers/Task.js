@@ -31,6 +31,7 @@ class Task extends Component {
 		.then(response => {
 	//		console.log('message created: '+JSON.stringify(response))
 			alert('thanks for reply, good luck')
+			// now lets send a notification to the origianl sender via sms...
 		})
 		.catch(err => {
 			console.log('message created failed: '+JSON.stringify(err))

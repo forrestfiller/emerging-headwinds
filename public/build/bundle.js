@@ -37385,6 +37385,7 @@
 				this.props.createMessage(updated).then(function (response) {
 					//		console.log('message created: '+JSON.stringify(response))
 					alert('thanks for reply, good luck');
+					// now lets send a notification to the origianl sender via sms...
 				}).catch(function (err) {
 					console.log('message created failed: ' + JSON.stringify(err));
 				});
