@@ -37,7 +37,7 @@ class Task extends Component {
 		.then(response => {
 			const params = {
 				recipient: task.profile.id,
-				text: 'Hello from you best Pal!!'
+				text: updated.text
 			}
 
 			return this.props.notify(params)

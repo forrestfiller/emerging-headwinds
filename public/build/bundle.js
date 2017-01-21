@@ -37383,7 +37383,7 @@
 				this.props.createMessage(updated).then(function (response) {
 					var params = {
 						recipient: task.profile.id,
-						text: 'Hello from you best Pal!!'
+						text: updated.text
 					};
 	
 					return _this2.props.notify(params);

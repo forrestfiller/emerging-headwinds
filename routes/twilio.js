@@ -58,6 +58,8 @@ router.post('/notify', function(req, res, next) {
 	.getById(req.body.recipient, false) // get the profile first
 	.then(function(profile){
 
+		var msg = 'Hooray! Someone replied to your request, here is their reply:\n\n'+req.body.text
+
 		return utils.TwilioHelper.sendSMS(profile.phone, req.body.text)
 	})
 
@@ -135,7 +137,7 @@ router.post('/task', function(req, res, next) {
 		console.log('SUCCESS'+JSON.stringify(result))
 		res.send('Hello!')
 	})
-	
+
 	.catch(function(err){
 		console.log('ERROR: '+err.message)
 	})
