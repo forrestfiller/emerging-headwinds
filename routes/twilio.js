@@ -60,7 +60,7 @@ router.post('/notify', function(req, res, next) {
 
 		var msg = 'Hooray! Someone replied to your request, here is their reply:\n\n'+req.body.text
 
-		return utils.TwilioHelper.sendSMS(profile.phone, req.body.text)
+		return utils.TwilioHelper.sendSMS(profile.phone, msg)
 	})
 
 	.then(function(message){
