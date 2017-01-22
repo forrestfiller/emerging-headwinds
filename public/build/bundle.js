@@ -37469,10 +37469,21 @@
 					};
 	
 					return _this2.props.notify(params);
-				}).then(function (response) {
+				})
+				// 
+				// .then(response => {
+				// 	const params = {
+				// 		recipient: task.profile.id,
+				// 		text: updated.text
+				// 	}
+				//
+				// 	return this.props.createMessage(params)
+				// })
+	
+				.then(function (response) {
 					alert('Thank you for submitting your bit to assist! Good luck!');
 				}).catch(function (err) {
-					console.log('message created failed: ' + JSON.stringify(err));
+					console.log('catch => message created failed: ' + JSON.stringify(err.message));
 				});
 			}
 		}, {
@@ -37484,17 +37495,6 @@
 					message: updated
 				});
 			}
-	
-			/*
-	  				<div id="wrapper"></div>
-	  					<div id="main"></div>
-	  						<div className="inner"></div>
-	  									<header id="header">
-	  									<a href="#" className="logo"><strong>Emerging Headwinds</strong></a>
-	  								</header>
-	  
-	  */
-	
 		}, {
 			key: 'render',
 			value: function render() {
@@ -37514,8 +37514,8 @@
 								'header',
 								{ id: 'header' },
 								_react2.default.createElement(
-									'a',
-									{ href: '/', className: 'logo' },
+									_reactRouter.Link,
+									{ to: '/', className: 'logo' },
 									_react2.default.createElement(
 										'strong',
 										null,
@@ -37588,6 +37588,7 @@
 			notify: function notify(params) {
 				return dispatch(_actions2.default.notify(params));
 			}
+	
 		};
 	};
 	
@@ -37709,7 +37710,7 @@
 	Object.defineProperty(exports, "__esModule", {
 		value: true
 	});
-	exports.accountReducer = exports.taskReducer = undefined;
+	exports.messageReducer = exports.accountReducer = exports.taskReducer = undefined;
 	
 	var _taskReducer = __webpack_require__(297);
 	
@@ -37719,10 +37720,15 @@
 	
 	var _accountReducer2 = _interopRequireDefault(_accountReducer);
 	
+	var _messageReducer = __webpack_require__(299);
+	
+	var _messageReducer2 = _interopRequireDefault(_messageReducer);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	exports.taskReducer = _taskReducer2.default;
 	exports.accountReducer = _accountReducer2.default;
+	exports.messageReducer = _messageReducer2.default;
 
 /***/ },
 /* 297 */
@@ -37755,6 +37761,7 @@
 			case _constants2.default.TASKS_RECEIVED:
 	
 				var keys = Object.keys(action.params);
+	
 				keys.forEach(function (key, i) {
 					var value = action.params[key]; // delivery, dog walking,etc
 					updated[value] = action.payload;
@@ -37823,6 +37830,42 @@
 	
 			default:
 				return state;
+		}
+	};
+
+/***/ },
+/* 299 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+		value: true
+	});
+	
+	var _constants = __webpack_require__(236);
+	
+	var _constants2 = _interopRequireDefault(_constants);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	var initialState = {};
+	
+	exports.default = function () {
+		var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initialState;
+		var action = arguments[1];
+	
+		var updated = Object.assign({}, state);
+	
+		switch (action.type) {
+	
+			case _constants2.default.MESSAGE_CREATED:
+				console.log('MESSAGE_CREATED: ' + JSON.stringify(updated));
+				return updated;
+	
+			default:
+	
+				return updated;
 		}
 	};
 

@@ -18,6 +18,7 @@ export default (state = initialState, action) => {
 		case constants.TASKS_RECEIVED:
 
 			const keys = Object.keys(action.params)
+
 			keys.forEach((key, i) => {
 				const value = action.params[key] // delivery, dog walking,etc
 				updated[value] = action.payload

@@ -7,7 +7,7 @@ class Task extends Component {
 	constructor(){
 		super()
 		this.state = {
-			message:{
+			message: {
 				text:''
 			}
 		}
@@ -35,6 +35,7 @@ class Task extends Component {
 		const task = this.props.tasks[taskId]
 
 		this.props.createMessage(updated)
+
 		.then(response => {
 			const params = {
 				recipient: task.profile.id,
@@ -80,7 +81,6 @@ class Task extends Component {
 			<div id="wrapper">
 				<div id="main">
 					<div className="inner">
-
 						<header id="header">
 
 							<Link to='/' className="logo"><strong>Emerging Headwinds</strong></Link>
@@ -123,6 +123,7 @@ const dispatchToProps = (dispatch) => {
 	return {
 		createMessage: (params) => dispatch(actions.createMessage(params)),
 		notify: (params) => dispatch(actions.notify(params))
+
 		}
 }
 
