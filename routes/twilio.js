@@ -12,7 +12,8 @@ router.get('/task', function(req, res, next) {
 })
 
 router.get('/notify', function(req, res, next) {
-// sendSMS: function(recipient, message, completion){
+// sendSMS: function(recipient, message)
+
 	utils.TwilioHelper.sendSMS('2122039317','xoxo are we working yet?')
 	.then(function(message){
 
@@ -58,7 +59,7 @@ router.post('/notify', function(req, res, next) {
 	.getById(req.body.recipient, false) // get the profile first
 	.then(function(profile){
 
-		var msg = 'Hooray! Someone replied to your request, here is their reply:\n\n'+req.body.text
+		var msg = 'Someone just replied to your request here is their response:\n\n'+req.body.text
 
 		return utils.TwilioHelper.sendSMS(profile.phone, msg)
 	})
@@ -89,7 +90,7 @@ router.post('/task', function(req, res, next) {
 
 	// Title. Category. Task description.
 	// example: 'Package Pickup. Delivery. Please pick up my package from the post office.'
-	var validCategories = ['delivery', 'house cleaning', 'dog walking', 'misc']
+	var validCategories = ['delivery', 'house cleaning', 'dog walking', 'misc', 'jobs']
 
 	var parts = message.split('.') // hopefully this is three parts
 

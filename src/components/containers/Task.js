@@ -44,12 +44,22 @@ class Task extends Component {
 			return this.props.notify(params)
 
 		})
+		// 
+		// .then(response => {
+		// 	const params = {
+		// 		recipient: task.profile.id,
+		// 		text: updated.text
+		// 	}
+		//
+		// 	return this.props.createMessage(params)
+		// })
+
 		.then(response => {
 			alert('Thank you for submitting your bit to assist! Good luck!')
 		})
 
 		.catch(err => {
-			console.log('message created failed: '+JSON.stringify(err))
+			console.log('catch => message created failed: '+JSON.stringify(err.message))
 		})
 
 	}
@@ -62,20 +72,6 @@ class Task extends Component {
 		})
 	}
 
-	/*
-
-				<div id="wrapper"></div>
-						<div id="main"></div>
-							<div className="inner"></div>
-
-									<header id="header">
-										<a href="#" className="logo"><strong>Emerging Headwinds</strong></a>
-									</header>
-
-
-	*/
-
-
 	render(){
 		const taskId = this.props.params.id
 		const task = this.props.tasks[taskId]
@@ -86,17 +82,17 @@ class Task extends Component {
 					<div className="inner">
 
 						<header id="header">
-							<a href="/" className="logo"><strong>Emerging Headwinds</strong></a>
+
+							<Link to='/' className="logo"><strong>Emerging Headwinds</strong></Link>
 						</header>
 						<br />
 
 						<div>
 							<h4>{ task.title }</h4><br />
-							{ task.description }
-							<br />
-							<Link to={'/api/task/?category='+task.category}>{ task.category }</Link>
-							<br />
+							{ task.description }<br />
+							<Link to={'/api/task/?category='+task.category}>{ task.category }</Link><br />
 							{ task.profile.username }<br />
+
 							{
 								(this.props.account.user == null) ? <h3>Please login or register to reply</h3> :
 								<div>
@@ -106,9 +102,8 @@ class Task extends Component {
 									<button onClick={this.submitMessage.bind(this)}>Submit</button>
 								</div>
 							}
+
 						</div>
-
-
 					</div>
 				</div>
 			</div>
