@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import actions from '../../actions'
+import { Link } from 'react-router'
 
 class Task extends Component {
 	constructor(){
@@ -61,26 +62,57 @@ class Task extends Component {
 		})
 	}
 
+	/*
+
+				<div id="wrapper"></div>
+						<div id="main"></div>
+							<div className="inner"></div>
+
+									<header id="header">
+										<a href="#" className="logo"><strong>Emerging Headwinds</strong></a>
+									</header>
+
+
+	*/
+
+
 	render(){
 		const taskId = this.props.params.id
 		const task = this.props.tasks[taskId]
 
 		return (
-			<div>
-				{ task.title }<br />
-				{ task.description }<br />
-				{ task.category }<br />
-				{ task.profile.username }<br />
-				{
-					(this.props.account.user == null) ? <h3>Please login or register to reply</h3> :
-					<div>
-						<h3>Reply</h3>
-						<textarea onChange={this.updateMessage.bind(this)} placeholder="Enter Message to Respond"></textarea>
+			<div id="wrapper">
+				<div id="main">
+					<div className="inner">
+
+						<header id="header">
+							<a href="/" className="logo"><strong>Emerging Headwinds</strong></a>
+						</header>
 						<br />
-						<button onClick={this.submitMessage.bind(this)}>Submit</button>
+
+						<div>
+							<h4>{ task.title }</h4><br />
+							{ task.description }
+							<br />
+							<Link to={'/api/task/?category='+task.category}>{ task.category }</Link>
+							<br />
+							{ task.profile.username }<br />
+							{
+								(this.props.account.user == null) ? <h3>Please login or register to reply</h3> :
+								<div>
+									<h3>Reply</h3>
+									<textarea onChange={this.updateMessage.bind(this)} placeholder="Enter Message to Respond"></textarea>
+									<br />
+									<button onClick={this.submitMessage.bind(this)}>Submit</button>
+								</div>
+							}
+						</div>
+
+
 					</div>
-				}
+				</div>
 			</div>
+
 		)
 	}
 }

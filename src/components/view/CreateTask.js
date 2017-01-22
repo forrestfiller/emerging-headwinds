@@ -40,6 +40,7 @@ class CreateTask extends Component {
 					<option value="misc">Miscellaneous</option>
 					<option value="jobs">Jobs</option>
 				</select>
+				<br />
 				<button onClick={this.submitTask.bind(this)}>Submit</button>
 			</div>
 		)

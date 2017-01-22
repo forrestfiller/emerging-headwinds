@@ -42,8 +42,10 @@ class Tasks extends Component {
 
 	render(){
 		return (
+
 			<section id="banner">
-				<div className="content">
+				<div  style={{paddingRight:10}} className="content">
+
 					<h3>Current Tasks</h3>
 					{ (this.props.tasks[this.props.tasks.selectedCategory] == null) ? null :
 							this.props.tasks[this.props.tasks.selectedCategory].map((task, i) => {
@@ -62,6 +64,7 @@ class Tasks extends Component {
 					}
 
 				</div>
+				<br />
 				<CreateTask onSubmitTask={this.createTask.bind(this)}/>
 			</section>
 		)
