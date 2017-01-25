@@ -18,12 +18,12 @@ gulp.task('css', function(){
         .pipe(gulp.dest('./public/build/css/'))
 })
 
-// gulp.task('copy', function(){
-//     return gulp.src(
-//             ['./public/assets/fonts/**']
-//         )
-//         .pipe(gulp.dest('./public/build/fonts/'))
-// })
+gulp.task('copy', function(){
+    return gulp.src(
+            ['./public/assets/fonts/**']
+        )
+        .pipe(gulp.dest('./public/build/fonts/'))
+})
 
 gulp.task('js', function(){
     return gulp.src(
@@ -45,5 +45,5 @@ gulp.task('watch', function() {
     gulp.watch(['./src/*/**.js', './src/*/*/**.js', './src/*/*/*/**.js'], ['css', 'js'])
 })
 
-gulp.task('prod', ['css', 'js'], function(){}) // 'copy',
-gulp.task('default', ['css', 'js', 'watch'], function(){}) // 'copy',
+gulp.task('prod', ['css', 'copy', 'js'], function(){})
+gulp.task('default', ['css', 'copy', 'js', 'watch'], function(){})
