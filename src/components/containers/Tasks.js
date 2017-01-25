@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { APIManager } from '../../utils'
-import { CreateTask } from '../view'
+import { Authenticate } from '../view'
 import { connect } from 'react-redux'
 import actions from '../../actions'
 import { Link } from 'react-router'
@@ -41,14 +41,14 @@ class Tasks extends Component {
 	}
 
 	render(){
-		return (
+		const taskList = this.props.tasks[this.props.tasks.selectedCategory]
 
+		return (
 			<section id="banner">
 				<div  style={{paddingRight:10}} className="content">
-
 					<h3>Current Tasks</h3>
-					{ (this.props.tasks[this.props.tasks.selectedCategory] == null) ? null :
-							this.props.tasks[this.props.tasks.selectedCategory].map((task, i) => {
+					{ (taskList == null) ? null :
+							taskList.map((task, i) => {
 								return (
 									<div key={task.id} className="box">
 										<Link to={'/task/'+task.id}>
@@ -64,13 +64,12 @@ class Tasks extends Component {
 					}
 
 				</div>
-				<br />
-				<CreateTask onSubmitTask={this.createTask.bind(this)}/>
+				<Authenticate />
 			</section>
 		)
 	}
 }
-
+//				<CreateTask onSubmitTask={this.createTask.bind(this)}/> removed!
 const stateToProps = (state) => {
 	return {
 		tasks: state.task
