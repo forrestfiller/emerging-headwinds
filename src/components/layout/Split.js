@@ -4,16 +4,21 @@ import { Task, Account } from '../containers'
 export default (props) => {
 
 	return (
-		<div className="container">
-			<div className="row">
-				<div className="col-md-8">
-					<Task {...props} />
+			<div id="wrapper">
+				<div id="main">
+					<div className="inner">
+						<header id="header">
+							<a href="/" className="logo"><strong>Emerging Headwinds</strong></a>
+						</header>
+
+						<Task {...props} />
+					</div>
 				</div>
 
-				<div className="col-md-4">
+				<div id="sidebar">
 					<Account />
 				</div>
+
 			</div>
-		</div>
 	)
 }

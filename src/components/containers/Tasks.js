@@ -69,7 +69,7 @@ class Tasks extends Component {
 		)
 	}
 }
-//				<CreateTask onSubmitTask={this.createTask.bind(this)}/> removed!
+
 const stateToProps = (state) => {
 	return {
 		tasks: state.task

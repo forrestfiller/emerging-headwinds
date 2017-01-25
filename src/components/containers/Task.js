@@ -78,36 +78,33 @@ class Task extends Component {
 		const task = this.props.tasks[taskId]
 
 		return (
-			<div id="wrapper">
-				<div id="main">
-					<div className="inner">
-						<header id="header">
 
-							<Link to='/' className="logo"><strong>Emerging Headwinds</strong></Link>
-						</header>
-						<br />
-
-						<div>
-							<h4>{ task.title }</h4><br />
-							{ task.description }<br />
-							<Link to={'/api/task/?category='+task.category}>{ task.category }</Link><br />
-							{ task.profile.username }<br />
-
-							{
-								(this.props.account.user == null) ? <h3>Please login or register to reply</h3> :
-								<div>
-									<h3>Reply</h3>
-									<textarea onChange={this.updateMessage.bind(this)} placeholder="Enter Message to Respond"></textarea>
-									<br />
-									<button onClick={this.submitMessage.bind(this)}>Submit</button>
-								</div>
-							}
-
-						</div>
+			<div>
+				<section>
+					<header className="major">
+						<h2 style={{border: 'none', marginBottom: 0}}>{ task.title }</h2>
+					</header>
+					
+					<div className="posts">
+						<article style={{background: '#f9f9f9'}}>
+							<p>{ task.description }</p>
+							{ task.category }<br />
+							{ task.profile.username }
+						</article>
 					</div>
-				</div>
-			</div>
 
+					{ (this.props.account.user == null) ? <h3>Please login or register to reply</h3> :
+						<div>
+							<h3>Reply</h3>
+							<textarea onChange={this.updateMessage.bind(this)} placeholder="Enter Message to Respond"></textarea>
+							<br />
+							<button onClick={this.submitMessage.bind(this)}>Submit</button>
+						</div>
+					}
+
+				</section>
+
+			</div>
 		)
 	}
 }
