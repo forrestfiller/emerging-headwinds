@@ -10,7 +10,7 @@ If you register/login and then wish to logout, for now, after the top level doma
 
 ###Build Instructions
 
-Note: just a friendly reminder that the Twilio integration in this project won't run on the local server (sorry), so if you wish to SMS your desires to server you'll surely want to deploy to live. I used Heroku, so be sure to check those heroku logs (run ```heroku logs``` on the cli) to see if your messages made it.
+**Note**: just a friendly reminder that the Twilio integration in this project won't run on the local server (sorry), so if you wish to SMS your desires to server you'll surely want to deploy to live. I used Heroku, so be sure to check those heroku logs (run ```heroku logs``` on the cli) to see if your messages made it.
 
 1. ```git clone``` this repo, and change directories into the root level directory of the project.
 
