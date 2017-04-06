@@ -7,17 +7,16 @@ router.get('/:resource', function(req, res, next) {
 
 	var controller = controllers[resource]
 	if (controller == null){
-	    res.json({
-	    	confirmation: 'fail',
-	    	message: 'Invalid Resource'
-	    })
-
+		res.json({
+			confirmation: 'fail',
+		  message: 'Invalid Resource'
+		})
+		
 	    return
 	}
 
 	controller.get(req.query, false)
-	.then(function(results){
-
+		.then(function(results){
 	    res.json({
 	    	confirmation: 'success',
 	    	results: results
