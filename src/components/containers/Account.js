@@ -6,14 +6,14 @@ import actions from '../../actions'
 class Account extends Component {
 
 	componentDidMount(){
-		
+
 		if (this.props.user == null)	//check current user
 			return
 
 		this.props.checkCurrentUser()
 
 		.then(response => {
-
+			console.log('CHECKCURRENTUSER: '+JSON.stringify(response))
 		})
 
 		.catch(err => {

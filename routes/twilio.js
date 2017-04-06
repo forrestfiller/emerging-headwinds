@@ -6,7 +6,7 @@ var utils = require('../utils')
 router.get('/task', function(req, res, next) {
   res.json({
 		confirmation: 'success',
-		message:'it worked'
+		message: 'a check to show this route works.'
 	})
 
 })
@@ -14,9 +14,9 @@ router.get('/task', function(req, res, next) {
 router.get('/notify', function(req, res, next) {
 // sendSMS: function(recipient, message)
 
-	utils.TwilioHelper.sendSMS('2122039317','xoxo are we working yet?')
+	utils.TwilioHelper.sendSMS('2122039317','body: twilio are we working yet?')
 	.then(function(message){
-
+    console.log('/notify twilio: '+JSON.stringify(message))
 		res.json({
 			confirmation: 'success',
 			message: message
