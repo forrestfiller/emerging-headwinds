@@ -8,7 +8,7 @@ The backend is written in Node.js, frontend is in React with Redux, using React-
 
 If you register/login and then wish to logout, for now, after the top level domain, drop in '/account/logout' and you should see a lovely JSON object letting you know that you were successful and that you, the user, are now null! I'll add a button in the near future. Similarly, if you're curious to know whether or not you are logged in, instead of entering '/account/logout' put in '/account/currentuser' and have a look at your JSON.
 
-###Build Instructions
+### Build Instructions
 
 **Note**: just a friendly reminder that the Twilio integration in this project won't run on the local server (sorry), so if you wish to SMS your desires to server you'll surely want to deploy to live. I used Heroku, so be sure to check those heroku logs (run ```heroku logs``` on the cli) to see if your messages made it.
 
@@ -32,7 +32,7 @@ If you register/login and then wish to logout, for now, after the top level doma
 
 5. If you would like to incorporate the SMS component, you will need a Twilio account and a phone number for use with this project. You set up a POST webhook under messaging from your Twilio number to your soon-to-be-deployed domain at 'http(s)://www.yourDomainName.com/twilio/task'. Be sure to SMS your Twilio number in the following format: "Title. Category. Description." it will post the SMS job/task request to your server, and will render the post on the app. Neat!
 
-###To Do's
+### To Do's
 - Finish wiring up react-router, which doesn't currently accept a refresh.
 - Polish up and enhance UI
 - Handle the edge-cases with texting in task/jobs, insufficient currently.
