@@ -5,7 +5,6 @@ import { connect } from 'react-redux'
 class Categories extends Component {
 
 	selectCategory(category, event){
-		event.preventDefault()
 		this.props.selectCategory(category)
 	}
 
@@ -36,10 +35,6 @@ class Categories extends Component {
 							}
 						</ul>
 					</nav>
-
-					<footer id="footer">
-						<p className="copyright">&copy; Untitled. All rights reserved. Demo Images: <a href="#">A Link!</a>. Design: <a href="#">Another Link</a>.</p>
-					</footer>
 			</div>
 		)
 	}
