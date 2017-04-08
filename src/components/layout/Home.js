@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Tasks, Categories, Account } from '../containers'
+import { Tasks, Categories } from '../containers'
 
 class Home extends Component {
 	render(){
