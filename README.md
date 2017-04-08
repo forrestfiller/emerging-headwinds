@@ -2,15 +2,15 @@
 
 [![Build Status](https://travis-ci.org/forrestfiller/emerging-headwinds.svg?branch=master)](https://travis-ci.org/forrestfiller/emerging-headwinds)
 
-This SPA makes posting jobs and tasks easier. I have tried to keep the code agnostic and modular. Perhaps more importantly, it is designed to be emotionally fulfilling.
+This SPA makes posting jobs and tasks easier. I have tried to keep the code agnostic and modular. I named the app in honor of a friend of mine.
 
-The backend is written in Node.js, frontend is in React with Redux, using React-router. I'm currently using Heroku for my deployment. The UI is a work in progress, and I'll have things looking better shortly.
+The backend is written in ```Node.js```, frontend is in ```React``` with ```Redux```, using ```React-router```. I'm currently using Heroku for my deployment. The UI is a work in progress, and I'll have things looking better shortly.
 
-If you register/login and then wish to logout, for now, after the top level domain, drop in '/account/logout' and you should see a lovely JSON object letting you know that you were successful and that you, the user, are now null! I'll add a button in the near future. Similarly, if you're curious to know whether or not you are logged in, instead of entering '/account/logout' put in '/account/currentuser' and have a look at your JSON.
+If you register/login and then wish to logout, for now, after the top level domain, drop in ```'/account/logout'``` and you should see a JSON object letting you know that you were successful and that the user is null. I'll add a button in the near future. Similarly, if you're curious to know whether or not you are logged in, instead of entering ```'/account/logout'``` put in ```'/account/currentuser'``` and have a look at your JSON.
 
 ### Build Instructions
 
-**Note**: just a friendly reminder that the Twilio integration in this project won't run on the local server (sorry), so if you wish to SMS your desires to server you'll surely want to deploy to live. I used Heroku, so be sure to check those heroku logs (run ```heroku logs``` on the cli) to see if your messages made it.
+**Note**: just a reminder that the Twilio integration in this project won't run on the local server (sorry), so if you wish to SMS your desires to server you'll surely want to deploy to live. I used Heroku, so be sure to check those heroku logs (run: ```heroku logs``` on the cli) to see if your messages made it.
 
 1. ```git clone``` this repo, and change directories into the root level directory of the project.
 
@@ -33,7 +33,7 @@ If you register/login and then wish to logout, for now, after the top level doma
 5. If you would like to incorporate the SMS component, you will need a Twilio account and a phone number for use with this project. You set up a POST webhook under messaging from your Twilio number to your soon-to-be-deployed domain at 'http(s)://www.yourDomainName.com/twilio/task'. Be sure to SMS your Twilio number in the following format: "Title. Category. Description." it will post the SMS job/task request to your server, and will render the post on the app. Neat!
 
 ### To Do's
-- Finish wiring up react-router, which doesn't currently accept a refresh.
+- Finish wiring up react-router, which doesn't currently accept a refresh, server-side or alternative.
 - Polish up and enhance UI
 - Handle the edge-cases with texting in task/jobs, insufficient currently.
 - Give user instructions in format to text their task/jobs to the server
