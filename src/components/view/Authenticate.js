@@ -22,13 +22,13 @@ class Authenticate extends Component {
 	}
 
 	register(event){
-//		console.log('register: '+JSON.stringify(this.state.credentials))
-		this.props.onRegister(this.state.credentials)
+		console.log('register: '+JSON.stringify(this.state.credentials))
+		this.props.register(this.state.credentials)
 	}
 
 	login(event){
-//		console.log('login: '+JSON.stringify(this.state.credentials))
-		this.props.onLogin(this.state.credentials)
+		console.log('login: '+JSON.stringify(this.state.credentials))
+		this.props.login(this.state.credentials)
 	}
 
 	render(){
