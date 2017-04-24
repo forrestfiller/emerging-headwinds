@@ -14,6 +14,7 @@ class Authenticate extends Component {
 	}
 
 	updateCredentials(field, event){
+		console.log('UPDATE CREDENTIALS: ')
 		let updated = Object.assign({}, this.state.credentials)
 		updated[field] = event.target.value
 		this.setState({
@@ -27,7 +28,7 @@ class Authenticate extends Component {
 	}
 
 	login(event){
-		console.log('login: '+JSON.stringify(this.state.credentials))
+//		console.log('login: '+JSON.stringify(this.state.credentials))
 		this.props.login(this.state.credentials)
 	}
 
